@@ -1,56 +1,43 @@
-// Modal functionality
-const modals = document.querySelectorAll('.modal');
-const exploreButtons = document.querySelectorAll('.btn-explore');
-const closeButtons = document.querySelectorAll('.close');
+document.addEventListener('DOMContentLoaded', () => {
+    const navToggle = document.querySelector('.nav-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    const navAnchors = document.querySelectorAll('.nav-links a');
+    const exploreButtons = document.querySelectorAll('.btn-outline');
+    const closeButtons = document.querySelectorAll('.close');
 
-// Open modal
-exploreButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        const modalId = button.getAttribute('data-modal');
-        const modal = document.getElementById(modalId);
-        modal.style.display = 'flex';
-    });
-});
+    if (navToggle && navLinks) {
+        navToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('open');
+        });
 
-// Close modal
-closeButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        const modal = button.closest('.modal');
-        modal.style.display = 'none';
-    });
-});
-
-// Close modal when clicking outside
-window.addEventListener('click', (event) => {
-    if (event.target.classList.contains('modal')) {
-        event.target.style.display = 'none';
+        navAnchors.forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('open');
+            });
+        });
     }
-});
-// Modal functionality
-const modals = document.querySelectorAll('.modal');
-const exploreButtons = document.querySelectorAll('.btn-explore');
-const closeButtons = document.querySelectorAll('.close');
 
-// Open modal
-exploreButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        const modalId = button.getAttribute('data-modal');
+    exploreButtons.forEach(button => {
+        const modalId = button.dataset.modal;
         const modal = document.getElementById(modalId);
-        modal.style.display = 'flex';
+        if (!modal) return;
+        button.addEventListener('click', () => {
+            modal.style.display = 'flex';
+        });
     });
-});
 
-// Close modal
-closeButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        const modal = button.closest('.modal');
-        modal.style.display = 'none';
+    closeButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const modal = button.closest('.modal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+        });
     });
-});
 
-// Close modal when clicking outside
-window.addEventListener('click', (event) => {
-    if (event.target.classList.contains('modal')) {
-        event.target.style.display = 'none';
-    }
+    window.addEventListener('click', (event) => {
+        if (event.target.classList.contains('modal')) {
+            event.target.style.display = 'none';
+        }
+    });
 });
